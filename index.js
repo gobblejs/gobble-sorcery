@@ -1,36 +1,37 @@
 var path = require( 'path' );
+var pattern = /#\s*sourceMappingURL=([^\s]+)/;
 
 module.exports = function sorcery ( inputdir, outputdir, options ) {
 	var sander = require( 'sander' ),
 		_sorcery = require( 'sorcery' );
 
 	return sander.lsr( inputdir ).then( function ( files ) {
-		var promises = files.map( function ( file ) {
-			return _sorcery.resolve( path.join( inputdir, file ) ).then( function ( map ) {
-				var mappath;
+		var promises, queue = [];
 
-				if ( !map ) {
+		promises = files.map( function ( file ) {
+			return _sorcery.load( path.join( inputdir, file ) ).then( function ( chain ) {
+				var map, promises;
+
+				if ( !chain ) {
 					// this is an original source
 					return sander.link( inputdir, file ).to( outputdir, file );
 				}
 
-				mappath = file + '.map';
-
-				return sander.Promise.all([
-					// write the file, pointing to new map
-					sander.readFile( inputdir, file ).then( String ).then( function ( code ) {
-						code = code.replace( /\/\/#\s*sourceMappingURL=([^\s]+)/, '//# sourceMappingURL=' + path.basename( mappath ) );
-						return sander.writeFile( outputdir, file, code );
-					}),
-
-					// ...and the new map
-					sander.writeFile( outputdir, mappath, JSON.stringify( map ) )
-				]);
-			}).catch( function ( err ) {
-				// For some reason we get ENOENT errors... squelching them for now
+				// don't write yet, as the .map file could be overwritten by an
+				// existing .map file. Instead, enqueue it
+				queue.push({
+					dest: path.join( outputdir, file ),
+					chain: chain
+				});
 			});
 		});
 
-		return sander.Promise.all( promises );
+		return sander.Promise.all( promises ).then( function () {
+			var promises = queue.map( function ( item ) {
+				return item.chain.write( item.dest, options );
+			});
+
+			return sander.Promise.all( promises );
+		});
 	});
 };

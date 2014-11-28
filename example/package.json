@@ -1,0 +1,9 @@
+{
+  "name": "gobble-sorcery-example",
+  "version": "0.1.0",
+  "author": "Rich Harris",
+  "devDependencies": {
+    "gobble": "^0.7.1",
+    "gobble-esperanto-bundle": "^0.1.1"
+  }
+}

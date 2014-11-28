@@ -1,13 +1,13 @@
 {
   "name": "gobble-sorcery",
   "description": "Trace sourcemaps back to the original source, with sorcery and gobble",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Rich Harris",
   "license": "MIT",
   "repository": "https://github.com/gobblejs/gobble-sorcery",
   "dependencies": {
-    "sander": "^0.1.6",
-    "sorcery": "^0.1.1"
+    "sander": "^0.2.1",
+    "sorcery": "^0.2.3"
   },
   "keywords": [
     "gobble"
