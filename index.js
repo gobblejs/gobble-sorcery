@@ -9,6 +9,10 @@ module.exports = function sorcery ( inputdir, outputdir, options ) {
 		var promises, queue = [];
 
 		promises = files.map( function ( file ) {
+			if ( file.slice( -4 ) === '.map' ) {
+				return sander.link( inputdir, file ).to( outputdir, file );
+			}
+
 			return _sorcery.load( path.join( inputdir, file ) ).then( function ( chain ) {
 				var map, promises;
 
