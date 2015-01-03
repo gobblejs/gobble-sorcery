@@ -10,7 +10,7 @@ module.exports = function sorcery ( inputdir, outputdir, options ) {
 
 		promises = files.map( function ( file ) {
 			if ( file.slice( -4 ) === '.map' ) {
-				return sander.link( inputdir, file ).to( outputdir, file );
+				return; // don't link intermediate sourcemaps
 			}
 
 			return _sorcery.load( path.join( inputdir, file ) ).then( function ( chain ) {
