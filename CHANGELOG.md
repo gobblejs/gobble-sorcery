@@ -1,5 +1,9 @@
 # changelog
 
+## 0.2.3
+
+* Update sorcery version
+
 ## 0.2.2
 
 * Existing (intermediate) sourcemaps are not copied, they're just clutter
