@@ -1,8 +1,8 @@
 # changelog
 
-## 0.2.3
+## 0.2.3, 0.2.4
 
-* Update to use sorcery 0.3.x
+* Update sorcery
 
 ## 0.2.2
 
