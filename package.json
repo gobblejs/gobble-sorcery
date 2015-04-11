@@ -7,7 +7,7 @@
   "repository": "https://github.com/gobblejs/gobble-sorcery",
   "dependencies": {
     "sander": "^0.2.1",
-    "sorcery": "^0.3.2"
+    "sorcery": "^0.4.0"
   },
   "keywords": [
     "gobble"
